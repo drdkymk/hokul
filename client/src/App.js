@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { IconContext } from "react-icons";
@@ -8,35 +8,14 @@ import { CgProfile } from 'react-icons/cg';
 import './style/css/bootstrap.css';
 import './App.css';
 
-import { Button, Navbar, Container, Nav, NavDropdown, Form, Alert, Offcanvas } from "react-bootstrap";
+import { Button, Navbar, Container, Nav, Form, Alert, Offcanvas } from "react-bootstrap";
 import { getCurrentUser, login, logout } from "./services/auth.service";
+import Axios from 'axios';
 
-import AktivitePage from "./AktivitePage";
-import AlanPage from "./AlanPage";
-import BelirtecPage from "./BelirtecPage";
-import BirimPage from "./BirimPage";
-import CiktiDetayPage from "./CiktiDetayPage";
-import CiktiPage from "./CiktiPage";
-import IlcePage from "./IlcePage";
-import IlPage from "./IlPage";
-import KullaniciPage from "./KullaniciPage";
-import MudahaleDetayPage from "./MudahaleDetayPage";
-import MudahalePage from "./MudahalePage";
-import ProblemBirimPage from "./ProblemBirimPage";
-import ProblemPage from "./ProblemPage";
-import SinifPage from "./SinifPage";
-import PersonelPage from "./PersonelPage";
-import ProblemMudahalePage from "./ProblemMudahalePage";
-import ProblemCiktiPage from "./ProblemCiktiPage";
-import IlaveMudahaleDetayPage from "./IlaveMudahaleDetayPage";
-import IlaveCiktiDetayPage from "./IlaveCiktiDetayPage";
-import PersonelProblemPage from "./PersonelProblem";
-import ProblemCiktiDegerlendirmePage from "./ProblemCiktiDegerlendirmePage";
-import ProblemDurumDegerlendirmePage from "./ProblemDurumDegerlendirmePage";
-import CalisanProblemPage from "./CalisanProblemPage";
-import CalisanAktivitePage from "./CalisanAktivitePage";
-import ProblemYoneticiPage from "./ProblemYoneticiPage";
-import InstructorPage from "./InstructorPage";
+import StudentPage from "./StudentPage";
+import CoursePage from "./CoursePage";
+import AccountPage from "./AccountPage";
+import GradePage from "./GradePage";
 
 
 function App() {
@@ -46,11 +25,27 @@ function App() {
   const [kullaniciAdi, setKullaniciAdi] = useState("");
   const [sifre, setSifre] = useState("");
 
+  const [assignedCourses, setAssignedCourses] = useState({});
+
+
   const togglePanel = () => {
     setShowToast(false);
     setShow(!show)
   };
   const currentPath = window.location.pathname;
+
+  useEffect(() => {
+    if(getCurrentUser() && getCurrentUser().role === "Öğretmen"){
+      Axios.get("http://localhost:8000/api/course?instructor=" + getCurrentUser()["username"])
+    .then((response) => {
+      let tempAssignedCourses = {};
+      response.data.forEach(course => {
+        tempAssignedCourses[course.id] = course;
+      });
+      setAssignedCourses(tempAssignedCourses);
+    });
+    }
+  } , []);
 
   return (
     <Router>
@@ -61,44 +56,21 @@ function App() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="m-auto">
-                {getCurrentUser() && getCurrentUser().role === "Admin" ?
+                {getCurrentUser() && getCurrentUser().role === "Öğretmen" ?
                   <>
-                    <Nav.Link href="/kullanici" active={currentPath === "/kullanici"}>Kullanıcı</Nav.Link>
-                    <Nav.Link href="/personel" active={currentPath === "/personel"}>Personel</Nav.Link>
-                    <Nav.Link href="/il" active={currentPath === "/il"}>İl</Nav.Link>
-                    <Nav.Link href="/ilce" active={currentPath === "/ilce"}>İlçe</Nav.Link>
-                    <Nav.Link href="/birim" active={currentPath === "/birim"} >Birim</Nav.Link>
-                    <Nav.Link href="/problem" active={currentPath === "/problem"}>Problem</Nav.Link>
-                    <Nav.Link href="/problemBirim" active={currentPath === "/problemBirim"}>Problem-Birim</Nav.Link>
-                    <Nav.Link href="/alan" active={currentPath === "/alan"}>Alan</Nav.Link>
-                    <Nav.Link href="/sinif" active={currentPath === "/sinif"}>Sınıf</Nav.Link>
-                    <NavDropdown title="Müdahale" id="mudahale-dropdown" active={currentPath === "/mudahale" || currentPath === "/aktivite" || currentPath === "/mudahaleDetay"}>
-                      <NavDropdown.Item href="/mudahale">Müdahale</NavDropdown.Item>
-                      <NavDropdown.Item href="/aktivite">Aktivite</NavDropdown.Item>
-                      <NavDropdown.Item href="/mudahaleDetay">Müdahale Detay</NavDropdown.Item>
-                    </NavDropdown>
-                    <NavDropdown title="Çıktı" id="cikti-dropdown" active={currentPath === "/cikti" || currentPath === "/belirtec" || currentPath === "/ciktiDetay"}>
-                      <NavDropdown.Item href="/cikti">Çıktı</NavDropdown.Item>
-                      <NavDropdown.Item href="/belirtec">Belirteç</NavDropdown.Item>
-                      <NavDropdown.Item href="/ciktiDetay">Çıktı Detay</NavDropdown.Item>
-                    </NavDropdown>
-                  </>
-                  : getCurrentUser() && getCurrentUser().role === "Yönetici" ?
-                    <>
-                      <Nav.Link href="/problemYonetici" active={currentPath === "/problemYonetici"}>Problem</Nav.Link>
-                      <Nav.Link href="/problemMudahale" active={currentPath === "/problemMudahale"}>Problem Müdahale</Nav.Link>
-                      <Nav.Link href="/problemCikti" active={currentPath === "/problemCikti"}>Problem Çıktı</Nav.Link>
-                      <Nav.Link href="/ilaveMudahaleDetay" active={currentPath === "/ilaveMudahaleDetay"}>İlave Müdahale Detay</Nav.Link>
-                      <Nav.Link href="/ilaveCiktiDetay" active={currentPath === "/ilaveCiktiDetay"}>İlave Çıktı Detay</Nav.Link>
-                      <Nav.Link href="/personelProblem" active={currentPath === "/personelProblem"}>Personel-Problem</Nav.Link>
-                      <Nav.Link href="/problemCiktiDegerlendirme" active={currentPath === "/problemCiktiDegerlendirme"}>Problem Çıktı Değerlendirme</Nav.Link>
-                      <Nav.Link href="/problemDurumDegerlendirme" active={currentPath === "/problemDurumDegerlendirme"}>Problem Durum Değerlendirme</Nav.Link>
-                      <Nav.Link href="/calisanAktivite" active={currentPath === "/calisanAktivite"}>Çalışan Aktiviteleri</Nav.Link>
+                  { Object.keys(assignedCourses).map((courseID) => {
+                    return <Nav.Link key={courseID} href={"/grade?course=" + courseID } active={currentPath === ("/grade?course=" + courseID) }>{assignedCourses[courseID]["courseName"]}</Nav.Link>
 
+                  })  }
+                   
+                  </>
+                  : getCurrentUser() && getCurrentUser().role === "Admin" ?
+                    <>
+                      <Nav.Link href="/account" active={currentPath === "/account"}>Kullanıcı</Nav.Link>
+                      <Nav.Link href="/course" active={currentPath === "/course"}>Ders</Nav.Link>
+                      <Nav.Link href="/student" active={currentPath === "/student"}>Öğrenci</Nav.Link>
                     </>
-                    : getCurrentUser() && getCurrentUser().role === "Personel" ?
-                      <Nav.Link href="/calisanProblem" active={currentPath === "/calisanProblem"}>Çalışan-Problem</Nav.Link>
-                      : <Nav.Link href="/problem" active={currentPath === "/problem"}>Problem Bildir</Nav.Link>
+                    : <></>
                 }
 
               </Nav>
@@ -118,83 +90,17 @@ function App() {
               }}>{getCurrentUser() ? "Profil" : "Giriş Yap"}</Button>
             </div>
           </Route>}
-          <Route path="/kullanici">
-            <KullaniciPage />
+          <Route path="/student">
+            <StudentPage />
           </Route>
-          <Route path="/personel">
-            <PersonelPage />
+          <Route path="/course">
+            <CoursePage />
           </Route>
-          <Route path="/il">
-            <IlPage />
+          <Route path="/account">
+            <AccountPage />
           </Route>
-          <Route path="/ilce">
-            <IlcePage />
-          </Route>
-          <Route path="/birim">
-            <BirimPage />
-          </Route>
-          <Route path="/problem">
-            <ProblemPage />
-          </Route>
-          <Route path="/problemBirim">
-            <ProblemBirimPage />
-          </Route>
-          <Route path="/alan">
-            <AlanPage />
-          </Route>
-          <Route path="/sinif">
-            <SinifPage />
-          </Route>
-          <Route path="/mudahale">
-            <MudahalePage />
-          </Route>
-          <Route path="/aktivite">
-            <AktivitePage />
-          </Route>
-          <Route path="/mudahaleDetay">
-            <MudahaleDetayPage />
-          </Route>
-          <Route path="/cikti">
-            <CiktiPage />
-          </Route>
-          <Route path="/belirtec">
-            <BelirtecPage />
-          </Route>
-          <Route path="/ciktiDetay">
-            <CiktiDetayPage />
-          </Route>
-          <Route path="/problemYonetici">
-            <ProblemYoneticiPage />
-          </Route>
-          <Route path="/problemMudahale">
-            <ProblemMudahalePage />
-          </Route>
-          <Route path="/problemCikti">
-            <ProblemCiktiPage />
-          </Route>
-          <Route path="/ilaveMudahaleDetay">
-            <IlaveMudahaleDetayPage />
-          </Route>
-          <Route path="/ilaveCiktiDetay">
-            <IlaveCiktiDetayPage />
-          </Route>
-          <Route path="/personelProblem">
-            <PersonelProblemPage />
-          </Route>
-          <Route path="/problemCiktiDegerlendirme">
-            <ProblemCiktiDegerlendirmePage />
-          </Route>
-          <Route path="/problemDurumDegerlendirme">
-            <ProblemDurumDegerlendirmePage />
-          </Route>
-          <Route path="/calisanProblem">
-            <CalisanProblemPage />
-          </Route>
-          <Route path="/calisanAktivite">
-            <CalisanAktivitePage />
-          </Route>
-          <Route path="/instructor">
-            <InstructorPage />
+          <Route path="/grade">
+            <GradePage />
           </Route>
         </Switch>
         <Offcanvas show={show} placement="end" onHide={togglePanel}>
