@@ -200,11 +200,11 @@ function CoursePage() {
                   <Form.Select value={selectedRow["instructorID"]} onChange={(e) => {
                     let tempSelectedRow = { ...selectedRow };
                     tempSelectedRow["instructorID"] = e.target.value;
-                    setNewRow(tempSelectedRow);
+                    setSelectedRow(tempSelectedRow);
                   }} required>
                     <option value="" disabled>Seçiniz...</option>
                     {instructorsSelect.map((value, index) => {
-                      return <option key={index} value={value.username}>{value.username + ": " + value.name + " " + value.username}</option>
+                      return <option key={index} value={value.username}>{value.username + ": " + value.name + " " + value.lastname}</option>
                     })}
                   </Form.Select>
                 </Form.Group>

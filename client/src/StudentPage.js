@@ -12,10 +12,10 @@ import { getCurrentUser } from './services/auth.service';
 
 function StudentPage() {
   const [newRow, setNewRow] = useState({
-    id:"", username: "", name: "", lastname:""
+    username: "", name: "", lastname: ""
   });
   const [searchRow, setSearchRow] = useState({
-    id:"", username: "", name: "", lastname:""
+    username: "", name: "", lastname: ""
   });
   const [selectedRow, setSelectedRow] = useState({});
   const [rows, setRows] = useState([]);
@@ -35,7 +35,7 @@ function StudentPage() {
   const addRow = () => {
     Axios.post("http://localhost:8000/api/student/create/", newRow)
       .then((response) => {
-        if(response.data === ""){
+        if (response.data === "") {
           setShowToast(true);
           return;
         }
@@ -45,10 +45,10 @@ function StudentPage() {
   }
 
   const updateRow = () => {
-    Axios.post("http://localhost:8000/api/student/update", selectedRow)
-    
+    Axios.post("http://localhost:8000/api/student/update", {username:selectedRow.username, name:selectedRow.name, lastname: selectedRow.lastname})
+
       .then((response) => {
-        if(response.data === ""){
+        if (response.data === "") {
           setShowToast(true);
           return;
         }
@@ -58,7 +58,7 @@ function StudentPage() {
   }
 
   const deleteRow = () => {
-    Axios.post("http://localhost:8000/api/student/delete", { id: selectedRow["id"] })
+    Axios.post("http://localhost:8000/api/student/delete", { username: selectedRow["username"] })
       .then((response) => {
 
         setUpdate(!update);
@@ -73,7 +73,7 @@ function StudentPage() {
       });
   }, [update]);
 
-  if(!getCurrentUser() || getCurrentUser().role !== "Admin"){
+  if (!getCurrentUser() || getCurrentUser().role !== "Admin") {
     return <></>;
   }
   return (
@@ -84,7 +84,7 @@ function StudentPage() {
         <Col>
           <Button className="float-end mt-1 me-4 mb-1" size="sm" variant="dark" onClick={() => {
             setNewRow({
-              id:"", username: "", name: "", lastname:""
+              username: "", name: "", lastname: ""
             });
             setIsEdit(false);
             togglePanel();
@@ -104,7 +104,7 @@ function StudentPage() {
           <tr>
             <td><Button size="sm" variant="light" onClick={() => {
               setSearchRow({
-                id:"", username: "", name: "", lastname:""
+                username: "", name: "", lastname: ""
               });
             }}><CgPlayListRemove /></Button></td>
             <td><Form.Control size="sm" type="text" value={searchRow["username"]} onChange={(e) => {
@@ -154,7 +154,7 @@ function StudentPage() {
           <Offcanvas.Title>{isEdit ? "Öğrencii Düzenle" : "Yeni Öğrenci"}</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-        <Alert show={showToast} variant="danger" onClose={() => setShowToast(false)} dismissible>
+          <Alert show={showToast} variant="danger" onClose={() => setShowToast(false)} dismissible>
             İşlem yapılırken hata oluştu.
           </Alert>
           {

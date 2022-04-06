@@ -14,10 +14,10 @@ import { getCurrentUser } from './services/auth.service';
 
 function AccountPage() {
   const [newRow, setNewRow] = useState({
-    id: "", username: "", name: "", lastname: "", password: "", role: ""
+    username: "", name: "", lastname: "", password: "", role: ""
   });
   const [searchRow, setSearchRow] = useState({
-    id: "", username: "", name: "", lastname: "", password: "", role: ""
+    username: "", name: "", lastname: "", password: "", role: ""
   });
   const [selectedRow, setSelectedRow] = useState({});
   const [rows, setRows] = useState([]);
@@ -40,16 +40,26 @@ function AccountPage() {
       setShowToast(true);
       return;
     }
-    Axios.post("http://localhost:8000/api/account/create", { username: newRow.username, name: newRow.name, lastname: newRow.lastname, password: sha256(newRow.password), role: isInstructor ? "Öğretmen" : "Admin"})
-      .then((response) => {
-        if (response.data === "") {
-
+    try {
+      Axios.post("http://localhost:8000/api/account/create", { username: newRow.username, name: newRow.name, lastname: newRow.lastname, password: sha256(newRow.password), role: isInstructor ? "Öğretmen" : "Admin" })
+        .catch(function (error) {
           setShowToast(true);
-          return;
-        }
-        setUpdate(!update);
-        togglePanel();
-      });
+
+        }).then((response) => {
+          if (response) {
+            if (response.data === "") {
+              setShowToast(true);
+              return;
+            }
+            setUpdate(!update);
+            togglePanel();
+          }
+
+        });
+    } catch (e) {
+      setShowToast(true);
+    }
+
   }
 
   const updateRow = () => {
@@ -57,7 +67,7 @@ function AccountPage() {
       setShowToast(true);
       return;
     }
-    Axios.post("http://localhost:8000/api/account/update", { id: selectedRow.id, username: selectedRow.username, password: sha256(selectedRow.password), role: selectedRow.role })
+    Axios.post("http://localhost:8000/api/account/update", { username: selectedRow.username, name: selectedRow.name, lastname: selectedRow.lastname, password: sha256(selectedRow.password), role: selectedRow.role })
       .then((response) => {
         if (response.data === "") {
           setShowToast(true);
@@ -69,7 +79,7 @@ function AccountPage() {
   }
 
   const deleteRow = () => {
-    Axios.post("http://localhost:8000/api/account/delete", { id: selectedRow["id"] })
+    Axios.post("http://localhost:8000/api/account/delete", { username: selectedRow["username"] })
       .then((response) => {
         setUpdate(!update);
         togglePanel();
@@ -91,10 +101,10 @@ function AccountPage() {
     return true;
   }
 
-  if(!getCurrentUser() || getCurrentUser().role !== "Admin"){
-      return <></>;
-    }
-    
+  if (!getCurrentUser() || getCurrentUser().role !== "Admin") {
+    return <></>;
+  }
+
   return (
     <div className="App">
       <Row>
@@ -103,7 +113,7 @@ function AccountPage() {
         <Col>
           <Button className="float-end mt-1 me-4 mb-1" size="sm" variant="dark" onClick={() => {
             setNewRow({
-              id: "", username: "", name: "", lastname: "", password: "", role:isInstructor ? "Öğretmen" : "Admin"
+              username: "", name: "", lastname: "", password: "", role: isInstructor ? "Öğretmen" : "Admin"
             });
             setIsEdit(false);
             togglePanel();
@@ -125,7 +135,7 @@ function AccountPage() {
           <tr>
             <td><Button size="sm" variant="light" onClick={() => {
               setSearchRow({
-                id: "", username: "", name: "", lastname: "", password: "", role: ""
+                username: "", name: "", lastname: "", password: "", role: ""
               });
             }}><CgPlayListRemove /></Button></td>
             <td><Form.Control size="sm" type="text" value={searchRow["username"]} onChange={(e) => {
@@ -190,7 +200,7 @@ function AccountPage() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Alert show={showToast} variant="danger" onClose={() => setShowToast(false)} dismissible>
-            İşlem yapılırken hata oluştu.
+            Bu kullanıcı adı sistemde zaten kullanılmaktadır.
           </Alert>
           {
             isEdit ?
@@ -198,6 +208,32 @@ function AccountPage() {
                 e.preventDefault();
                 updateRow();
               }}>
+                {/* <div style={{ textAlign: "center", justifyContent: "center" }}>
+                  <Form.Group className="mb-3">
+                    <ButtonGroup name="toggleisInstructor" disabled defaultValue={"new"} onChange={() => {
+                      // setIsInstructor(!isInstructor);
+                    }}>
+                      <ToggleButton
+                        type="radio" name="existed" value={true} checked={(selectedRow["role"] !== "Admin") === true}
+                        variant={selectedRow["role"] !== "Admin" ? 'dark' : 'outline-dark'}
+                        onClick={() => {
+                          let tempSelectedRow = { ...selectedRow };
+                          tempSelectedRow["role"] = "Öğretmen";
+                          setSelectedRow(tempSelectedRow);
+                        }}
+                      >Öğretmen</ToggleButton>
+                      <ToggleButton
+                        type="radio" name="new" value={false} checked={(selectedRow["role"] !== "Admin") === false}
+                        variant={selectedRow["role"] !== "Admin" ? 'outline-dark' : 'dark'}
+                        onClick={() => {
+                          let tempSelectedRow = { ...selectedRow };
+                          tempSelectedRow["role"] = "Admin";
+                          setSelectedRow(tempSelectedRow);
+                        }}
+                      > Admin </ToggleButton>
+                    </ButtonGroup>
+                  </Form.Group>
+                </div> */}
                 <Form.Group className="mb-3">
                   <Form.Label>Kullanıcı Adı</Form.Label>
                   <Form.Control type="text" value={selectedRow["username"]} onChange={(e) => {
@@ -224,9 +260,9 @@ function AccountPage() {
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Soyad</Form.Label>
-                  <Form.Control type="text" value={selectedRow["lastName"]} onChange={(e) => {
+                  <Form.Control type="text" value={selectedRow["lastname"]} onChange={(e) => {
                     let tempSelectedRow = { ...selectedRow };
-                    tempSelectedRow["lastName"] = e.target.value;
+                    tempSelectedRow["lastname"] = e.target.value;
                     setSelectedRow(tempSelectedRow);
                   }} required />
                 </Form.Group>

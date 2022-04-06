@@ -43,7 +43,6 @@ class AccountController extends Controller
             ]);
         }catch(\Exception $e){
             //\Log::error($e->getMessage());
-            echo $e->getMessage();
             return response()->json([
                 'message'=>'Something goes wrong while creating a Account!!'
             ],500);
@@ -60,7 +59,6 @@ class AccountController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'id'=>'required',
             'username'=>'required',
             'name'=>'required',
             'lastname'=>'required',
@@ -69,24 +67,25 @@ class AccountController extends Controller
         ]);
 
         try{
-            Account::find($request->post()["id"])->update($request->post());
+            Account::where('username',$request->post()["username"])->update($request->post());
             return response()->json([
                 'message'=>'Account Updated Successfully!!'
             ]);
 
         }catch(\Exception $e){
-            echo $e->getMessage();
+            
             //\Log::error($e->getMessage());
             return response()->json([
-                'message'=>'Something goes wrong while updating a account!!'
-            ],500);
+                'message'=>'Something goes wrong while updating a account!!',
+                "err" => $e->getMessage()
+            ]);
         }
     }
 
     public function destroy(Request $request)
     {
         try {
-            Account::where('id', $request->post()["id"])->delete();
+            Account::where('username', $request->post()["username"])->delete();
             return response()->json([
                 'message'=>'Account Deleted Successfully!!'
             ]);

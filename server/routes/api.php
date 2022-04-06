@@ -6,14 +6,8 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GradeController;
-use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentCourseController;
-
-Route::get('/instructor', [InstructorController::class, 'index']);
-Route::post('/instructor/create', [InstructorController::class, 'store']);
-Route::post('/instructor/update', [InstructorController::class, 'update']);
-Route::post('/instructor/delete', [InstructorController::class, 'destroy']);
 
 Route::get('/student', [StudentController::class, 'index']);
 Route::post('/student/create', [StudentController::class, 'store']);

@@ -153,7 +153,7 @@ function GradePage() {
     <div className="App">
       <Row>
         <Col></Col>
-        <Col><h3> Not </h3></Col>
+        <Col><h3> {assignedCourses[courseID]["courseName"]} </h3></Col>
         <Col>
           <div style={{ display: "flex" }}>
             <InputGroup className="float-end mt-1 mb-1" style={{ width: "100%", marginRight: "5px" }}>
@@ -162,6 +162,7 @@ function GradePage() {
               }} />
               <Button className="ml-2 ml-5 mt-0" size="sm" variant="dark" onClick={() => {
                 if (newAssignment.length > 0) {
+                  saveRows();
                   addAssignmentToCourse();
                   setNewAssignment("");
                 }
@@ -194,7 +195,9 @@ function GradePage() {
                     }
                     }
                   />
-                  <FaTimes onClick={() => { removeAssignmentFromCourse(assignment["id"]); }} style={{ color: "red", marginTop: "5px" }} />
+                  <FaTimes onClick={() => {
+                    saveRows();
+                     removeAssignmentFromCourse(assignment["id"]); }} style={{ color: "red", marginTop: "5px" }} />
                 </div>
               </th>
             })}
@@ -223,26 +226,43 @@ function GradePage() {
             return <tr key={index}
               onMouseEnter={() => { setEditVisibilityIndex(index); }}
               onMouseLeave={() => { setEditVisibilityIndex(-1); }}>
-              <td>{editVisibilityIndex === index ? <FaTimes onClick={() => { removeStudentFromCourse(username); }} style={{ color: "red" }} /> : index + 1}</td>
+              <td>{editVisibilityIndex === index ? <FaTimes onClick={() => { 
+                saveRows();
+                removeStudentFromCourse(username); }} style={{ color: "red" }} /> : index + 1}</td>
               <td>{username}</td>
               <td style={{ whiteSpace: "nowrap" }}>{studentsSelect[username]["name"] + " " + studentsSelect[username]["lastname"]}</td>
               {assignments.map((element) => { return element["id"] }).map((assignmentID) => {
-                return assignmentStats[assignmentID] ? <td key={assignmentID} ><Form.Control size="sm" type="number" min="0" max="100" value={rows[username] !== undefined && rows[username][assignmentID] !== undefined && rows[username][assignmentID]["studentGrade"]} onChange={(e) => {
-                  if (e.target.value.length < 4) {
-                    let tempRows = { ...rows };
-                    if (!(assignmentID in tempRows[username])) {
-                      tempRows[username][assignmentID] = { gradeID: "0", studentGrade: "" };
-                    }
-                    tempRows[username][assignmentID]["studentGrade"] = e.target.value;
-                    setRows(tempRows);
-                    if (!(username in changedIndexes)) {
-                      changedIndexes[username] = [];
-                    }
-                    if (!changedIndexes[username].includes(assignmentID)) {
-                      changedIndexes[username].push(assignmentID);
-                    }
-                  }
-                }} /></td> : <td key={assignmentID + "_text"}>{rows[username] !== undefined && rows[username][assignmentID] !== undefined && rows[username][assignmentID]["studentGrade"]}</td>
+                return assignmentStats[assignmentID] ? <td key={assignmentID} >
+                  <Form.Control size="sm" type="number" min="0" max="100"
+                    value={rows[username] !== undefined && rows[username][assignmentID] !== undefined && rows[username][assignmentID]["studentGrade"]}
+                    onClick={(e) => {
+                      if (e.target.value === "0") {
+                        e.target.value = "";
+                      }
+                    }}
+                    onChange={(e) => {
+                      console.log('e.target.value.length: ', e.target.value.length);
+                    
+                        let val = e.target.value;
+                        console.log('val.indexOf("e"): ', val.indexOf("e"));
+                        if(val > 100 || val < 0 || val.indexOf("e") > -1){
+                          val = 0;
+                        }
+                        let tempRows = { ...rows };
+                        if (!(assignmentID in tempRows[username])) {
+                          tempRows[username][assignmentID] = { gradeID: "0", studentGrade: "" };
+                        }
+                        tempRows[username][assignmentID]["studentGrade"] = val;
+                        setRows(tempRows);
+                        if (!(username in changedIndexes)) {
+                          changedIndexes[username] = [];
+                        }
+                        if (!changedIndexes[username].includes(assignmentID)) {
+                          changedIndexes[username].push(assignmentID);
+                        }
+                      
+                      
+                    }} /></td> : <td key={assignmentID + "_text"}>{rows[username] !== undefined && rows[username][assignmentID] !== undefined && rows[username][assignmentID]["studentGrade"]}</td>
               })}
               <td>{avg}</td>
             </tr>
@@ -261,6 +281,7 @@ function GradePage() {
                     })}
                   </Form.Select>
                   <Button className="ml-2 ml-5 mt-0" size="sm" variant="dark" onClick={() => {
+                    saveRows();
                     addStudentToCourse();
                     setStudentToBeAdded("");
                   }}>Ekle</Button>

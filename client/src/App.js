@@ -33,6 +33,7 @@ function App() {
     setShow(!show)
   };
   const currentPath = window.location.pathname;
+  const courseParam = new URLSearchParams(window.location.search).get("course");
 
   useEffect(() => {
     if(getCurrentUser() && getCurrentUser().role === "Öğretmen"){
@@ -52,14 +53,14 @@ function App() {
       <div>
         <Navbar bg="light" variant="light" expand="sm" style={{ marginBottom: "10px", textAlign:"center" }}>
           <Container>
-            <Navbar.Brand href="/">Company</Navbar.Brand>
+            <Navbar.Brand href="/">Not Yönetim Sistemi</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="m-auto">
                 {getCurrentUser() && getCurrentUser().role === "Öğretmen" ?
                   <>
                   { Object.keys(assignedCourses).map((courseID) => {
-                    return <Nav.Link key={courseID} href={"/grade?course=" + courseID } active={currentPath === ("/grade?course=" + courseID) }>{assignedCourses[courseID]["courseName"]}</Nav.Link>
+                    return <Nav.Link key={courseID} href={"/grade?course=" + courseID } active={courseParam === (courseID) }>{assignedCourses[courseID]["courseName"]}</Nav.Link>
 
                   })  }
                    
@@ -77,7 +78,7 @@ function App() {
             </Navbar.Collapse>
             <Button variant="light" onClick={() => {
               togglePanel();
-            }}>{getCurrentUser() ? "Merhaba, " + getCurrentUser().username : "Giriş Yap"}</Button>
+            }}>{getCurrentUser() ? "Merhaba, " + getCurrentUser().name : "Giriş Yap"}</Button>
           </Container>
         </Navbar>
 
@@ -124,6 +125,7 @@ function App() {
                   login(kullaniciAdi, sifre).then((res) => {
                     if (res.username) {
                       togglePanel()
+                      window.location.reload();
                     }
                     else {
                       setShowToast(true);
@@ -157,7 +159,7 @@ function App() {
                     </div>
                   </IconContext.Provider>
                 </div>
-                <h3>{getCurrentUser().username}</h3>
+                <h3>{getCurrentUser().name + " " + getCurrentUser().lastname}</h3>
                 <p style={{ color: "grey" }}>{getCurrentUser().role}</p>
                 <Route render={({ history }) => (
                   <Button style={{ width: "95%" }} className="mt-3" variant="dark" onClick={() => {

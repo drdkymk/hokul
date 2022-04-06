@@ -11,14 +11,6 @@ class StudentController extends Controller
         return Student::all();
     }
 
-    // public function index(Request $request){
-    //     $courseID = $request->course;
-    //     if( $courseID){
-    //         return Student::where('courseID', $courseID)->get();
-    //     }
-    //     return Student::all();
-    // }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -51,14 +43,13 @@ class StudentController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'id'=>'required',
             'username'=>'required',
             'name'=>'required',
             'lastname'=>'required'
         ]);
 
         try{
-            Student::find($request->post()["id"])->update($request->post());
+            Student::where('username',$request->post()["username"])->update($request->post());
             return response()->json([
                 'message'=>'Student Updated Successfully!!'
             ]);
@@ -75,7 +66,7 @@ class StudentController extends Controller
     public function destroy(Request $request)
     {
         try {
-            Student::where('id', $request->post()["id"])->delete();
+            Student::where('username', $request->post()["username"])->delete();
             return response()->json([
                 'message'=>'Student Deleted Successfully!!'
             ]);
