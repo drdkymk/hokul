@@ -1,0 +1,342 @@
+-- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+--
+-- Host: localhost    Database: hokul_db
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `accounts`
+--
+
+DROP TABLE IF EXISTS `accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `accounts` (
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `accounts`
+--
+
+LOCK TABLES `accounts` WRITE;
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `accounts` VALUES ('admin','Ahmet','Çelik','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','Admin',NULL,'2022-04-06 01:05:56'),('ayse123','Ayşe','Yılmaz','2e672116a7ee1d96874abd10a17bebfeca15bfdb46c8c0d4e138498228ed2ecb','Öğretmen','2022-04-06 00:20:31','2022-04-06 01:03:46'),('mehmet321','Mehmet','Topal','db809532163d2e25c865a200bb2dd1631a2862c776ed10c8291bf500a38fb08f','Öğretmen','2022-04-06 00:35:44','2022-04-06 01:05:39');
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-06 22:12:54
+
+
+-- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+--
+-- Host: localhost    Database: hokul_db
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `assignments`
+--
+
+DROP TABLE IF EXISTS `assignments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `assignments` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `courseID` int NOT NULL,
+  `assignmentName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assignments`
+--
+
+LOCK TABLES `assignments` WRITE;
+/*!40000 ALTER TABLE `assignments` DISABLE KEYS */;
+INSERT INTO `assignments` VALUES (1,1,'Yazılı 1','2022-04-06 00:51:15','2022-04-06 00:51:15'),(2,1,'Yazılı 2','2022-04-06 00:51:15','2022-04-06 00:51:15'),(3,1,'Yazılı 3','2022-04-06 00:51:15','2022-04-06 00:51:15'),(4,1,'Performans 1','2022-04-06 00:51:15','2022-04-06 00:51:15'),(5,1,'Performans 2','2022-04-06 00:51:15','2022-04-06 00:51:15'),(6,1,'Proje','2022-04-06 00:51:15','2022-04-06 00:51:15'),(7,2,'Yazılı 1','2022-04-06 00:51:38','2022-04-06 00:51:38'),(8,2,'Yazılı 2','2022-04-06 00:51:38','2022-04-06 00:51:38'),(9,2,'Yazılı 3','2022-04-06 00:51:38','2022-04-06 00:51:38'),(10,2,'Performans 1','2022-04-06 00:51:38','2022-04-06 00:51:38'),(11,2,'Performans 2','2022-04-06 00:51:38','2022-04-06 00:51:38'),(12,2,'Proje','2022-04-06 00:51:38','2022-04-06 00:51:38'),(13,3,'Yazılı 1','2022-04-06 01:00:56','2022-04-06 01:00:56'),(14,3,'Yazılı 2','2022-04-06 01:00:56','2022-04-06 01:00:56'),(15,3,'Yazılı 3','2022-04-06 01:00:56','2022-04-06 01:00:56'),(16,3,'Performans 1','2022-04-06 01:00:56','2022-04-06 01:00:56'),(17,3,'Performans 2','2022-04-06 01:00:56','2022-04-06 01:00:56'),(19,4,'Yazılı 1','2022-04-06 01:01:08','2022-04-06 01:01:08'),(20,4,'Yazılı 2','2022-04-06 01:01:08','2022-04-06 01:01:08'),(21,4,'Yazılı 3','2022-04-06 01:01:08','2022-04-06 01:01:08'),(22,4,'Performans 1','2022-04-06 01:01:08','2022-04-06 01:01:08'),(23,4,'Performans 2','2022-04-06 01:01:08','2022-04-06 01:01:08'),(24,4,'Proje','2022-04-06 01:01:08','2022-04-06 01:01:08'),(25,5,'Yazılı 1','2022-04-06 01:01:26','2022-04-06 01:01:26'),(26,5,'Yazılı 2','2022-04-06 01:01:26','2022-04-06 01:01:26'),(27,5,'Yazılı 3','2022-04-06 01:01:26','2022-04-06 01:01:26'),(28,5,'Performans 1','2022-04-06 01:01:26','2022-04-06 01:01:26'),(29,5,'Performans 2','2022-04-06 01:01:26','2022-04-06 01:01:26'),(30,5,'Proje','2022-04-06 01:01:26','2022-04-06 01:01:26'),(31,6,'Yazılı 1','2022-04-06 01:01:52','2022-04-06 01:01:52'),(32,6,'Yazılı 2','2022-04-06 01:01:52','2022-04-06 01:01:52'),(33,6,'Yazılı 3','2022-04-06 01:01:52','2022-04-06 01:01:52'),(34,6,'Performans 1','2022-04-06 01:01:52','2022-04-06 01:01:52'),(35,6,'Performans 2','2022-04-06 01:01:52','2022-04-06 01:01:52'),(36,6,'Proje','2022-04-06 01:01:52','2022-04-06 01:01:52'),(37,6,'sdkfsdk','2022-04-06 01:26:30','2022-04-06 01:26:30'),(39,6,'mkm','2022-04-06 01:28:18','2022-04-06 01:28:18'),(40,3,'Proje 2','2022-04-06 15:00:53','2022-04-06 15:00:53'),(41,3,'sdsdsdasad','2022-04-06 15:01:24','2022-04-06 15:01:24'),(44,3,'uhidfghfigdfhiuh','2022-04-06 15:01:38','2022-04-06 15:01:38'),(45,3,'sdf','2022-04-06 15:10:44','2022-04-06 15:10:44'),(46,3,'fdgfdjfij','2022-04-06 15:12:13','2022-04-06 15:12:13');
+/*!40000 ALTER TABLE `assignments` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-06 22:12:54
+
+
+
+-- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+--
+-- Host: localhost    Database: hokul_db
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `courses`
+--
+
+DROP TABLE IF EXISTS `courses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `courses` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `courseCode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `courseName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `instructorID` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `courses`
+--
+
+LOCK TABLES `courses` WRITE;
+/*!40000 ALTER TABLE `courses` DISABLE KEYS */;
+INSERT INTO `courses` VALUES (3,'mat101','Matematik 1','mehmet321','2022-04-06 01:00:56','2022-04-06 14:57:28'),(4,'mat102','Matematik 2','ayse123','2022-04-06 01:01:08','2022-04-06 14:38:08'),(5,'fiz101','Fizik','mehmet321','2022-04-06 01:01:26','2022-04-06 01:01:26'),(6,'tar101','Tarih','mehmet321','2022-04-06 01:01:52','2022-04-06 01:02:12');
+/*!40000 ALTER TABLE `courses` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-06 22:12:54
+
+
+-- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+--
+-- Host: localhost    Database: hokul_db
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `grades`
+--
+
+DROP TABLE IF EXISTS `grades`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `grades` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `courseID` int NOT NULL,
+  `assignmentID` int NOT NULL,
+  `studentGrade` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grades`
+--
+
+LOCK TABLES `grades` WRITE;
+/*!40000 ALTER TABLE `grades` DISABLE KEYS */;
+INSERT INTO `grades` VALUES (1,'145305023',6,32,23,'2022-04-06 01:24:28','2022-04-06 01:24:28'),(2,'171101059',6,32,34,'2022-04-06 01:24:28','2022-04-06 01:24:28'),(3,'171101059',6,33,76,'2022-04-06 01:24:28','2022-04-06 01:24:28'),(4,'234581243',6,32,34,'2022-04-06 01:24:28','2022-04-06 01:24:28'),(5,'234581243',6,33,34,'2022-04-06 01:24:28','2022-04-06 01:24:28'),(6,'145305023',6,34,12,'2022-04-06 01:26:03','2022-04-06 01:26:16'),(7,'171201028',6,35,0,'2022-04-06 01:28:01','2022-04-06 01:59:26'),(8,'145305023',6,33,12,'2022-04-06 01:28:18','2022-04-06 01:28:18'),(10,'171201028',6,34,34,'2022-04-06 01:29:37','2022-04-06 01:29:37'),(11,'171101059',6,34,32,'2022-04-06 01:33:01','2022-04-06 01:33:01'),(12,'145305023',6,35,47,'2022-04-06 01:54:57','2022-04-06 01:55:35'),(13,'171101059',6,35,45,'2022-04-06 01:55:35','2022-04-06 01:55:35'),(14,'234581243',6,34,76,'2022-04-06 01:57:59','2022-04-06 01:57:59'),(15,'237424557',6,35,0,'2022-04-06 01:58:31','2022-04-06 01:59:26'),(16,'125565467',3,14,98,'2022-04-06 15:00:20','2022-04-06 15:00:20'),(17,'125565467',3,16,34,'2022-04-06 15:00:20','2022-04-06 15:00:20'),(18,'145305023',3,14,34,'2022-04-06 15:00:20','2022-04-06 15:00:20'),(19,'145305023',3,16,23,'2022-04-06 15:00:20','2022-04-06 15:00:20'),(20,'125565467',3,40,0,'2022-04-06 15:12:13','2022-04-06 15:12:13'),(21,'125565467',3,46,34,'2022-04-06 15:12:41','2022-04-06 15:12:41'),(22,'145305023',3,46,21,'2022-04-06 15:12:41','2022-04-06 15:12:41');
+/*!40000 ALTER TABLE `grades` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-06 22:12:54
+
+
+
+-- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+--
+-- Host: localhost    Database: hokul_db
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `student_courses`
+--
+
+DROP TABLE IF EXISTS `student_courses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `student_courses` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `studentID` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `courseID` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student_courses`
+--
+
+LOCK TABLES `student_courses` WRITE;
+/*!40000 ALTER TABLE `student_courses` DISABLE KEYS */;
+INSERT INTO `student_courses` VALUES (1,'145305023',6,'2022-04-06 01:16:48','2022-04-06 01:16:48'),(2,'171101059',6,'2022-04-06 01:17:30','2022-04-06 01:17:30'),(3,'234581243',6,'2022-04-06 01:18:46','2022-04-06 01:18:46'),(4,'171201028',6,'2022-04-06 01:27:05','2022-04-06 01:27:05'),(5,'237424557',6,'2022-04-06 01:28:36','2022-04-06 01:28:36'),(6,'125565467',3,'2022-04-06 14:59:34','2022-04-06 14:59:34'),(7,'171101059',3,'2022-04-06 14:59:39','2022-04-06 14:59:39'),(8,'145305023',3,'2022-04-06 14:59:42','2022-04-06 14:59:42'),(9,'234581243',3,'2022-04-06 15:02:58','2022-04-06 15:02:58'),(10,'171201028',5,'2022-04-06 15:12:57','2022-04-06 15:12:57'),(11,'145305023',5,'2022-04-06 15:13:00','2022-04-06 15:13:00');
+/*!40000 ALTER TABLE `student_courses` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-06 22:12:54
+
+
+
+-- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+--
+-- Host: localhost    Database: hokul_db
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `students`
+--
+
+DROP TABLE IF EXISTS `students`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `students` (
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `students`
+--
+
+LOCK TABLES `students` WRITE;
+/*!40000 ALTER TABLE `students` DISABLE KEYS */;
+INSERT INTO `students` VALUES ('125565467','Ali','Turan','2022-04-06 14:58:26','2022-04-06 14:58:26'),('145305023','Sıla','Yılmaz','2022-04-06 00:57:31','2022-04-06 00:57:31'),('171101059','Arda','Kaya','2022-04-06 00:56:38','2022-04-06 00:56:38'),('171201028','Mete','Kaya','2022-04-06 00:57:07','2022-04-06 00:59:01'),('234581243','Begüm','Öztürk','2022-04-06 00:59:30','2022-04-06 00:59:30'),('237424557','Pelin','Demir','2022-04-06 01:08:05','2022-04-06 01:08:05');
+/*!40000 ALTER TABLE `students` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-06 22:12:55
