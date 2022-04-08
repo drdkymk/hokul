@@ -204,7 +204,7 @@ function CoursePage() {
                   }} required>
                     <option value="" disabled>Seçiniz...</option>
                     {instructorsSelect.map((value, index) => {
-                      return <option key={index} value={value.username}>{value.username + ": " + value.name + " " + value.lastname}</option>
+                      return <option key={index} value={value.username}>{ value.name + " " + value.lastname}</option>
                     })}
                   </Form.Select>
                 </Form.Group>
@@ -244,7 +244,7 @@ function CoursePage() {
                   }} required>
                     <option value="" disabled>Seçiniz...</option>
                     {instructorsSelect.map((value, index) => {
-                      return <option key={index} value={value.username}>{value.username + ": " + value.name + " " + value.username}</option>
+                      return <option key={index} value={value.username}>{ value.name + " " + value.lastname}</option>
                     })}
                   </Form.Select>
                 </Form.Group>

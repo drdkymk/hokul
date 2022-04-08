@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\StudentCourse;
+use App\Models\Grade;
 
 class StudentController extends Controller
 {
@@ -67,6 +69,9 @@ class StudentController extends Controller
     {
         try {
             Student::where('username', $request->post()["username"])->delete();
+            StudentCourse::where('studentID', $request->post()["username"])->delete();
+            Grade::where('username', $request->post()["username"])->delete();
+
             return response()->json([
                 'message'=>'Student Deleted Successfully!!'
             ]);

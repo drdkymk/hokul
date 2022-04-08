@@ -31,8 +31,12 @@ function GradePage() {
   const saveRows = () => {
     Object.keys(changedIndexes).forEach(username => {
       changedIndexes[username].forEach(assignmentID => {
+        let grade = rows[username][assignmentID]["studentGrade"];
+        if(grade.length === 0){
+          grade = "0";
+        }
         Axios.post("http://localhost:8000/api/grade/update",
-          { username: username, assignmentID: assignmentID, courseID: courseID, id: rows[username][assignmentID]["gradeID"], studentGrade: rows[username][assignmentID]["studentGrade"] })
+          { username: username, assignmentID: assignmentID, courseID: courseID, id: rows[username][assignmentID]["gradeID"], studentGrade: grade })
           .then((response) => {
             if (response.data === "") {
               return;
@@ -236,16 +240,14 @@ function GradePage() {
                   <Form.Control size="sm" type="number" min="0" max="100"
                     value={rows[username] !== undefined && rows[username][assignmentID] !== undefined && rows[username][assignmentID]["studentGrade"]}
                     onClick={(e) => {
-                      if (e.target.value === "0") {
-                        e.target.value = "";
-                      }
+                      e.target.value = e.target.value.replace(/^0+/, "");
                     }}
                     onChange={(e) => {
-                      console.log('e.target.value.length: ', e.target.value.length);
-                    
                         let val = e.target.value;
-                        console.log('val.indexOf("e"): ', val.indexOf("e"));
-                        if(val > 100 || val < 0 || val.indexOf("e") > -1){
+                        if (e.target.value !== "0") {
+                          val = val.replace(/^0+/, "");
+                        }
+                        if(val > 100 || val < 0 || val.includes("e")){
                           val = 0;
                         }
                         let tempRows = { ...rows };

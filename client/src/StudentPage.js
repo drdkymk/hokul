@@ -33,6 +33,10 @@ function StudentPage() {
   };
 
   const addRow = () => {
+    if(newRow.username.length !== 11 && !Number.isInteger(newRow.username)){
+      setShowToast(true);
+      return;
+    }
     Axios.post("http://localhost:8000/api/student/create/", newRow)
       .then((response) => {
         if (response.data === "") {
@@ -45,6 +49,10 @@ function StudentPage() {
   }
 
   const updateRow = () => {
+    if(selectedRow.username.length !== 11 && !Number.isInteger(selectedRow.username)){
+      setShowToast(true);
+      return;
+    }
     Axios.post("http://localhost:8000/api/student/update", {username:selectedRow.username, name:selectedRow.name, lastname: selectedRow.lastname})
 
       .then((response) => {
